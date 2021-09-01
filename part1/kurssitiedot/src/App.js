@@ -34,6 +34,10 @@ const Total = (props) => {
   )
 }
 
+/**
+ * Main component of the application
+ * @returns JSX to render to DOM
+ */
 const App = () => {
   const course = 'Half Stack application development'
   const part1 = 'Fundamentals of React'
