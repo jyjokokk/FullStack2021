@@ -8,7 +8,7 @@ Repository for Fullstack Open (2021 version)
 
 - React komponenttien nimien tulee alkaa isolla alkukirjaimella
 - React-komponenteissa, kaari palaute aina `<div>` tagien sisaan, tai kayttamalla
-  fragmenteja_, eli tyhjia elementteja: `<> </>`
+  _fragmenteja_, eli tyhjia elementteja: `<> </>`
 - Reactissa sovelletaan funktionaalisen ohjelmoinnin tekniikoita
   + Tyypillista on kayttaa _immutable_ tietorakenteita
     * Esim. taulukoissa kayta mieluummin `concat` kuin `push` lisatessa alkioita
@@ -16,6 +16,43 @@ Repository for Fullstack Open (2021 version)
 - `useState` _ei saa kutsua_ loopissa, ehtolauseeessa, tai muista kuin komponentin
   maaritelevissa funktioissa
 - Ala koskaan maarittele komponenttia toisen komponentin sisalla!
+
+#### Debugging
+
+Kayttaessa `console.log`ia debauksessa, ala yhdista asioita plussalla, vaan erottele
+tulostettavat asiat pilkulla:
+
+```javascript
+const obj = {nimi: "Olio", ika: 23}
+console.log("Olion arvot " + olio)  // Olion arvot [Object object]
+console.log("Olion arvot ", olio)  // Olion arvot {nimi: 'Olio', ika: 23}
+```
+
+Kirjoita `debugger` mihin tahansa kohtaa koodia, ja selain pysayttaa suorittamisen
+esiintyman kohdalle (ikaan kuin inline breakpoint):
+
+```javascript
+const arg1 = "1234"
+debugger  // Pysahtyy tahan
+console.log(4 + 5)
+```
+
+#### Dynaaminen sisalto
+
+JSX mahdollistaa dynaamisen sisallon kayton.
+Komponentin `return` osiossa voidaan suorittaa dynaamista sisaltoa maarittelemalla
+se aaltosulkeiden sisalla.
+
+```javascript
+const App = () => {
+    const now = new Date()
+    return (
+        <div>
+            <p>Today is {now.toString()}</p>
+        </div>
+    )
+}
+```
 
 ### Objects
 
@@ -134,23 +171,6 @@ const App = () => {
     return (
         <div>
             <p>Esimerkkina nain</p>
-        </div>
-    )
-}
-```
-
-### Dynaaminen sisalto
-
-JSX mahdollistaa dynaamisen sisallon kayton.
-Komponentin `return` osiossa voidaan suorittaa dynaamista sisaltoa maarittelemalla
-se aaltosulkeiden sisalla.
-
-```javascript
-const App = () => {
-    const now = new Date()
-    return (
-        <div>
-            <p>Today is {now.toString()}</p>
         </div>
     )
 }
