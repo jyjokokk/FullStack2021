@@ -13,6 +13,9 @@ Repository for Fullstack Open (2021 version)
   + Tyypillista on kayttaa _immutable_ tietorakenteita
     * Esim. taulukoissa kayta mieluummin `concat` kuin `push` lisatessa alkioita
 - Tapahtumankasittelijan pitaa useimmiten olla _viite_ funktioon, ei funktiokutsu
+- `useState` _ei saa kutsua_ loopissa, ehtolauseeessa, tai muista kuin komponentin
+  maaritelevissa funktioissa
+- Ala koskaan maarittele komponenttia toisen komponentin sisalla!
 
 ### Objects
 
@@ -38,6 +41,21 @@ Olioille voidaan lisata kenttia "lennosta" samoin tavoin:
 ```javascript
 obj1.hometown = 'Jyvaskyla'
 obj1['numero'] = 123456
+```
+
+Object spread syntaksi mahdollistaa uusien objektion luomisen kopiomalla vanhan
+objektin kentat, ja sen jalkeen arvoja voidaan muuttaa aaltosulkeiden sisalla
+
+```javascript
+const clicks = {
+    left: 0,
+    right: 0
+}
+
+const clicks2 = {
+    ...clicks,
+    left: clicks.left + 1
+}
 ```
 
 ### Destrukturointi
@@ -108,7 +126,6 @@ Jos parametreja on vain yksi, voidaan sulut jattaa maarittelysta pois:
 ```javascript
 const square = n => {n * n}
 ```
-
 
 Palauttaessa monimutkaisempaa sisaltoa, voidaan se kaaria sulkeiden sisaan.
 
