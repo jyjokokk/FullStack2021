@@ -8,6 +8,7 @@ const Button = ({ handleClick, text }) => {
   )
 }
 
+// NOTE: Kommentoitu osa jatetty tiedostoon tehtava 1.10. suorittamisen osoitukseksi
 // const StatisticLine = ({ value, text }) => {
 //   return (
 //     <div>
