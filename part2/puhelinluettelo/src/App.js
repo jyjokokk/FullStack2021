@@ -23,6 +23,11 @@ const App = () => {
     const personObject = {
       name: newName
     }
+    if (persons.some(person => person.name === newName)) {
+      window.alert(`${newName} is already included in the phonebook!`)
+      setNewName('')
+      return
+    }
     setPersons(persons.concat(personObject))
     setNewName('')
   }
@@ -44,7 +49,7 @@ const App = () => {
       <h2>Numbers</h2>
       <div>
         {persons.map((person, index) =>
-          <Person key={index} person={person} />
+          <Person key={person.name} person={person} />
         )}
       </div>
     </div>
