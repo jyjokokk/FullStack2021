@@ -3,33 +3,39 @@ import React, { useState } from 'react'
 const Person = ({ person }) => {
   return (
     <div>
-      <p>{person.name}</p>
+      <p>{person.name} {person.number}</p>
     </div>
   )
 }
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '040-8231244' }
   ])
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber ] = useState('')
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
 
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+
   const addPerson = (event) => {
     event.preventDefault()
     const personObject = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
     if (persons.some(person => person.name === newName)) {
       window.alert(`${newName} is already included in the phonebook!`)
-      setNewName('')
       return
     }
     setPersons(persons.concat(personObject))
     setNewName('')
+    setNewNumber('')
   }
 
   return (
@@ -41,6 +47,12 @@ const App = () => {
                   value={newName}
                   onChange={handleNameChange}
                 />
+        </div>
+        <div>
+          number: <input
+                    value={newNumber}
+                    onChange={handleNumberChange}
+                  />
         </div>
         <div>
           <button type="submit">add</button>
