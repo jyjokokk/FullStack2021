@@ -16,12 +16,12 @@ const Country = ({ country }) => {
           <li key={language.name}>{language.name}</li>
         )}
       </ul>
-      <img src={country.flag} alt="flag" width="320" height="320"/>
+      <img src={country.flag} alt="flag" width="320"/>
     </div>
   )
 }
 
-const CountriesDisplay = ({ countries }) => {
+const CountriesDisplay = ({ countries, handleClick }) => {
   if (countries.length > 10) {
     return (
       <div></div>
@@ -35,7 +35,10 @@ const CountriesDisplay = ({ countries }) => {
   return (
     <div>
       {countries.map(country =>
-        <div key={country.name}>{country.name}</div>
+        <div key={country.name}>
+          {country.name}
+          <button onClick={() => handleClick(country.name)}>show</button>
+        </div>
       )}
     </div>
   )
@@ -58,6 +61,11 @@ const App = () => {
     setNewFilter(event.target.value)
   }
 
+  const changeFilter = (country) => {
+    setNewFilter(country)
+  }
+
+
   const countriesToShow = countries.filter(country =>
     country.name.toLowerCase().includes(newFilter.toLowerCase())
   )
@@ -74,7 +82,7 @@ const App = () => {
         </form>
       </div>
       <div>
-        <CountriesDisplay countries={countriesToShow} />
+        <CountriesDisplay countries={countriesToShow} handleClick={changeFilter}/>
       </div>
     </div>
   )
