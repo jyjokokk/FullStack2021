@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const APIKEY = process.env.REACT_APP_API_KEY
+const APIURL = `http://api.weatherstack.com/current?access_key=${APIKEY}&query=`
+const weatherStub = {
+  "temperature": null,
+  "wind_speed": null,
+  "wind_dir": null,
+}
+
 const Weather = ({ city }) => {
-  const [ newWeather, setWeather ] = useState({ })
+  const [ newWeather, setWeather ] = useState(weatherStub)
   useEffect(() => {
     axios
-    .get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=${city}`)
+    .get(`${APIURL}${city}`)
     .then(response => {
       setWeather(response.data.current)
     })
