@@ -5,6 +5,8 @@ import PersonDisplay from './components/PersonDisplay'
 
 import axios from 'axios'
 
+const baseUrl = 'http://localhost:3001/persons'
+
 const App = () => {
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
@@ -13,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get(baseUrl)
       .then(response => {
         setPersons(response.data)
       })
@@ -41,13 +43,23 @@ const App = () => {
       name: newName,
       number: newNumber
     }
+    // TODO: Tarkista data palvelimelta?
     if (persons.some(person => person.name === newName)) {
       window.alert(`${newName} is already included in the phonebook!`)
       return
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    // setPersons(persons.concat(personObject))
+    // setNewName('')
+    // setNewNumber('')
+
+    axios
+      .post(baseUrl, personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+      })
+
   }
 
   return (
