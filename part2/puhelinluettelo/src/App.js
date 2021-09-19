@@ -39,6 +39,13 @@ const App = () => {
     }
   }
 
+  const updatePerson = (id, newPerson) => {
+    personsService.update(id, newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+      })
+  }
+
   const personsToShow = persons.filter(person =>
     person.name.toLowerCase().includes(newFilter.toLowerCase())
   )
@@ -50,7 +57,11 @@ const App = () => {
       number: newNumber
     }
     if (persons.some(person => person.name === newName)) {
-      window.alert(`${newName} is already included in the phonebook!`)
+      if (window.confirm(`${newName} is already included in the phonebook. Would you like to update their number?`)) {
+        const targetId = persons.find(person => person.name === newName)
+        updatePerson(targetId.id, personObject)
+        return
+      }
       return
     }
     personsService
