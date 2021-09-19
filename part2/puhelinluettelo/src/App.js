@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import PersonDisplay from './components/PersonDisplay'
+import personsService from './services/persons'
 
-import axios from 'axios'
-
-const baseUrl = 'http://localhost:3001/persons'
 
 const App = () => {
   const [ persons, setPersons] = useState([])
@@ -14,10 +12,10 @@ const App = () => {
   const [ newFilter, setNewFilter ] = useState('')
 
   useEffect(() => {
-    axios
-      .get(baseUrl)
-      .then(response => {
-        setPersons(response.data)
+    personsService
+      .getAll()
+      .then(returnedPersons => {
+        setPersons(returnedPersons)
       })
   }, [])
 
@@ -43,22 +41,17 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    // TODO: Tarkista data palvelimelta?
     if (persons.some(person => person.name === newName)) {
       window.alert(`${newName} is already included in the phonebook!`)
       return
     }
-    // setPersons(persons.concat(personObject))
-    // setNewName('')
-    // setNewNumber('')
-
-    axios
-      .post(baseUrl, personObject)
-      .then(response => {
-        setPersons(persons.concat(response.data))
-        setNewName('')
-        setNewNumber('')
-      })
+    personsService
+      .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
 
   }
 
