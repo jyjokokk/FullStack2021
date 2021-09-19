@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Person = ({ person }) => {
+const Person = ({ person, handleClick }) => {
   return (
     <div>
-      <p>{person.name} {person.number}</p>
+      {person.name} {person.number}
+      <button onClick={() => handleClick(person.id)}>delete</button>
     </div>
   )
 }

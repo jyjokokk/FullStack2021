@@ -31,6 +31,14 @@ const App = () => {
     setNewFilter(event.target.value)
   }
 
+  const deletePerson = (id) => {
+    const target = persons.find(person => person.id === id)
+    if (window.confirm(`Are you sure you want to delete ${target.name}?`)) {
+      personsService.deleteItem(id)
+      setPersons(persons.filter(person => person.id !== id))
+    }
+  }
+
   const personsToShow = persons.filter(person =>
     person.name.toLowerCase().includes(newFilter.toLowerCase())
   )
@@ -67,7 +75,7 @@ const App = () => {
                   submit={addPerson}
       />
       <h2>Numbers</h2>
-      <PersonDisplay personsList={personsToShow} />
+      <PersonDisplay personsList={personsToShow} handleClick={deletePerson} />
     </div>
   )
 
