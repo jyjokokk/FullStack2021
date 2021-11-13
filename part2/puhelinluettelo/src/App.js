@@ -11,7 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
-  const [ errorMessage, setErrorMessage ] = useState('Blaa blaa')
+  const [ errorMessage, setErrorMessage ] = useState(null)
   const [ style, setStyle ] = useState('success')
 
   useEffect(() => {
@@ -48,6 +48,14 @@ const App = () => {
   }
 
   const updatePerson = (id, newPerson) => {
+    const persons = personsService.getAll()
+    if (!(id in persons)) {
+      setErrorMessage(`Person ${newPerson.name} has already been removed!`)
+      setStyle('error')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 2000)
+    }
     personsService.update(id, newPerson)
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
