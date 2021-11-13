@@ -3,6 +3,7 @@ import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import PersonDisplay from './components/PersonDisplay'
 import personsService from './services/persons'
+import Notification from './components/Notification'
 
 
 const App = () => {
@@ -10,6 +11,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newFilter, setNewFilter ] = useState('')
+  const [ errorMessage, setErrorMessage ] = useState('Blaa blaa')
+  const [ style, setStyle ] = useState('success')
 
   useEffect(() => {
     personsService
@@ -36,6 +39,11 @@ const App = () => {
     if (window.confirm(`Are you sure you want to delete ${target.name}?`)) {
       personsService.deleteItem(id)
       setPersons(persons.filter(person => person.id !== id))
+      setStyle('success')
+      setErrorMessage(`Removed ${target.name}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 2000)
     }
   }
 
@@ -43,6 +51,11 @@ const App = () => {
     personsService.update(id, newPerson)
       .then(returnedPerson => {
         setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+          setStyle('success')
+          setErrorMessage(`Updated ${newPerson}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2000)
       })
   }
 
@@ -70,6 +83,12 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          console.log(`Added ${newName}`)
+          setStyle('success')
+          setErrorMessage(`Added ${newName}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2000)
         })
 
   }
@@ -78,6 +97,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Filter text={newFilter} handleChange={handleFilterChange} />
+      <Notification message={errorMessage} style={style}/>
       <h2>Add a new contact</h2>
       <PersonForm nameValue={newName}
                   nameHandler={handleNameChange}
