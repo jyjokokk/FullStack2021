@@ -48,22 +48,17 @@ const App = () => {
   }
 
   const updatePerson = (id, newPerson) => {
-    const persons = personsService.getAll()
-    if (!(id in persons)) {
-      setErrorMessage(`Person ${newPerson.name} has already been removed!`)
-      setStyle('error')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 2000)
-    }
     personsService.update(id, newPerson)
       .then(returnedPerson => {
-        setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
-          setStyle('success')
-          setErrorMessage(`Updated ${newPerson}`)
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 2000)
+        personsService.getAll()
+        .then(newPersons => {
+          setPersons(newPersons.map(person => person.id !== id ? person : returnedPerson))
+            setStyle('success')
+            setErrorMessage(`Updated ${newPerson}`)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 2000)
+        })
       })
   }
 
