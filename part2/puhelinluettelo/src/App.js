@@ -55,6 +55,8 @@ const App = () => {
           setPersons(newPersons.map(person => person.id !== id ? person : returnedPerson))
             setStyle('success')
             setErrorMessage(`Updated ${newPerson}`)
+            setNewName('')
+            setNewNumber('')
             setTimeout(() => {
               setErrorMessage(null)
             }, 2000)
