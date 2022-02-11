@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// const uniqueValidator = require('mongoose-unique-vaidator')
 
 const blogSchema = mongoose.Schema({
   title: String,
