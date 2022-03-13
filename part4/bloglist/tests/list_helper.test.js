@@ -95,3 +95,18 @@ describe('mostBlogs', () => {
     expect(result).toEqual(expectedResult)
   })
 })
+
+describe('mostLikes', () => {
+  test('when list is empty', () => {
+    const result = listHelper.mostLikes(emptyList)
+    expect(result).toEqual({})
+  })
+  test('when list has multiple entries', () => {
+    const result = listHelper.mostLikes(listWithMultiple)
+    const expectedResult = {
+      author: 'Edsger W. Dijkstra',
+      likes: 17
+    }
+    expect(result).toEqual(expectedResult)
+  })
+})

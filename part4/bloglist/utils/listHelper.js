@@ -41,10 +41,39 @@ const mostBlogs = (blogs) => {
   }
 }
 
+const mostLikes = (blogs) => {
+  // if (blogs.length < 1) {
+  //   return {}
+  // }
+  // const groupedByAuthor = _.groupBy(blogs, 'author')
+  // const mapped = _.mapValues(groupedByAuthor, (o) => {
+  //   o.reduce((total, blog) => total + blog.likes, 0)
+  // })
+  // const maxKey = _.maxBy(_.keys(mapped), o => mapped[o])
+  // const maxValue = mapped[maxKey]
+  // return {
+  //   author: maxKey,
+  //   likes: maxValue
+  // }
+  const grouped = _.groupBy(blogs, 'author')
+
+  const likeReducer = (sum, blog) => sum + blog.likes
+  const mappedValues = _.mapValues(grouped, (o) => o.reduce(likeReducer, 0))
+
+  const maxKey = _.maxBy(_.keys(mappedValues), (o) => mappedValues[o])
+  const maxValue = mappedValues[maxKey]
+
+  return {
+    author: maxKey,
+    likes: maxValue
+  }
+}
+
 
 module.exports = {
   dummy,
   totalLikes,
   mostBlogs,
+  mostLikes,
   favouriteBlog
 }
