@@ -11,7 +11,7 @@ const listWithOneBlog = [
     __v: 0
   }
 ]
-const listWithMultiplse = [
+const listWithMultiple = [
   {
     _id: '5a422a851b54a676234d17f7',
     title: 'React patterns',
@@ -53,7 +53,7 @@ describe('totalLikes', () => {
     expect(result).toBe(5)
   })
   test('when list has multiple blog entries', () => {
-    const result = listHelper.totalLikes(listWithMultiplse)
+    const result = listHelper.totalLikes(listWithMultiple)
     expect(result).toBe(24)
   })
 })
@@ -76,7 +76,22 @@ describe('favouriteBlog', () => {
       likes: 12,
       __v: 0
     }
-    const result = listHelper.favouriteBlog(listWithMultiplse)
+    const result = listHelper.favouriteBlog(listWithMultiple)
     expect(result).toEqual(expected)
+  })
+})
+
+describe('mostBlogs', () => {
+  test('when list is empty', () => {
+    const result = listHelper.mostBlogs(emptyList)
+    expect(result).toEqual({})
+  })
+  test('when list has multiple entries', () => {
+    const result = listHelper.mostBlogs(listWithMultiple)
+    const expectedResult = {
+      author: 'Edsger W. Dijkstra',
+      blogs: 2
+    }
+    expect(result).toEqual(expectedResult)
   })
 })
