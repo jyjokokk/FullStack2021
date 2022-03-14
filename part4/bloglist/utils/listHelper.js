@@ -46,9 +46,9 @@ const mostLikes = (blogs) => {
     return {}
   }
   const groupedByAuthor = _.groupBy(blogs, 'author')
-  const mapped = _.mapValues(groupedByAuthor, (o) => {
+  const mapped = _.mapValues(groupedByAuthor, (o) =>
     o.reduce((total, blog) => total + blog.likes, 0)
-  })
+  )
   const maxKey = _.maxBy(_.keys(mapped), o => mapped[o])
   const maxValue = mapped[maxKey]
   return {
